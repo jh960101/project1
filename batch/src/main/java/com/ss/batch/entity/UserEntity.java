@@ -1,0 +1,31 @@
+package com.ss.batch.entity;
+
+import java.util.Map;
+
+import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
+
+import lombok.*;
+
+@Data
+@Entity
+@Table(name = "user")
+public class UserEntity extends BaseEntity{
+
+	@Id
+	private String userId; // 아이디
+	private String userName; // 이름
+	
+	@Enumerated(EnumType.STRING) //문자로 저장
+	private UserStatus status;// 사용자 상태
+	private String phone;// 폰번호
+	// Json형태로 저장된 데이터를 자바에서 사용 하기 위한 구조
+	@Type(type = "json")
+	private Map<String, Object> meta;//세부 정보
+	
+	//후반에 일괄적으로 고객한테 배포하기 위해서 
+	//카카오톡 메시지 보낼때 
+	//UUID를 메타 데이터에서 추출해서 저장!
+	
+}

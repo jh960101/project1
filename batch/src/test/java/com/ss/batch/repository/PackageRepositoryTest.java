@@ -1,5 +1,6 @@
 package com.ss.batch.repository;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -13,6 +14,26 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import com.ss.batch.entity.PackageEntity;
+
+/*
+ * 테스트 환경을 만들어서 테스트하는 파일을 사용
+ * 서버설정(테스트 할때만 사용)
+ * @ActiveProfiles(환경설정)
+ * application-test.properties
+ * application-test.yml
+ * 
+ * dev
+ *  개발중에 사용하는 설정(로컬 데이터베이스,디버그 모드)
+ * prod
+ *  실제 서비스에서 사용하는 설정
+ *  성능 최적화, 보안관련 설정
+ *  
+ *  test
+ *   테스트환경을 나타내는 설정 파일
+ *   
+ *  두가지 환경을 동시에 설정하는 경우!
+ *   @ActiveProfiles({"dev","test"})
+ */
 
 @SpringBootTest
 public class PackageRepositoryTest {
@@ -84,6 +105,24 @@ public class PackageRepositoryTest {
 		assertEquals(120,update.getPeriod());
 		//업데이트 된 행의 수가 1인지 확인
 		assertEquals(1, updateRows);
+		
+	}
+	
+	@Test
+	public void test_delete() {
+		//given : 초기테스트설정
+		PackageEntity packageEntity = new PackageEntity();
+		packageEntity.setPackageName("제거한 이름");
+		packageEntity.setCount(1);
+		
+		PackageEntity newpPackageEntity = repo.save(packageEntity);
+		System.out.println("시퀀스"+newpPackageEntity);
+		//when : 실제 실행하는 구문
+		repo.deleteById(newpPackageEntity.getPackseq());
+		
+		//then : 엔티티가 삭제후 있는지 없는지 확인
+		assertTrue(repo.findById(newpPackageEntity.getPackseq()).isEmpty());
+		
 		
 	}
 
