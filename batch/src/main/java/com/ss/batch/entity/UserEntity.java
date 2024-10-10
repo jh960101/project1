@@ -5,12 +5,16 @@ import java.util.Map;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 import lombok.*;
 
 @Data
 @Entity
 @Table(name = "user")
+@TypeDef(name = "json",typeClass = JsonStringType.class)
 public class UserEntity extends BaseEntity{
 
 	@Id
@@ -21,6 +25,7 @@ public class UserEntity extends BaseEntity{
 	private UserStatus status;// 사용자 상태
 	private String phone;// 폰번호
 	// Json형태로 저장된 데이터를 자바에서 사용 하기 위한 구조
+	// 라이브러리가 필요하다.
 	@Type(type = "json")
 	private Map<String, Object> meta;//세부 정보
 	

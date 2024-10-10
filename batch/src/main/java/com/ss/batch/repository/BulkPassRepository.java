@@ -10,6 +10,6 @@ import com.ss.batch.entity.BulkPassStatus;
 
 public interface BulkPassRepository extends JpaRepository<BulkPassEntity, Long>{
 
-	List<BulkPassEntity> findByStausAndStartedAtGreaterThan(BulkPassStatus ready, LocalDateTime startAt);
+	List<BulkPassEntity> findByStatusAndStartedAtGreaterThan(BulkPassStatus ready, LocalDateTime startAt);
 
 }

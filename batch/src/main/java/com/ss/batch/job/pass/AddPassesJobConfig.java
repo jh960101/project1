@@ -32,7 +32,7 @@ public class AddPassesJobConfig {
 	public Job addPassJob() {
 		return this.jobBuilderFactory
 			       .get("addPassJob")
-			       .start(addPassStep())
+			       .start(addPassStep()) // 단일 스레드
 			       .build();
 	}
 
