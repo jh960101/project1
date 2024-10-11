@@ -38,5 +38,36 @@ public class MainController {
  *   git을 apt를 이용해서 git을 다운받으면 됨
  *   apt 사용시 apt목록을 업데이트
  *
+ *	실제 파일을 다운로드 받으면 폴더 안으로 들어가서 gradle과 관련된 파일을 찾는다.
+ *  gradle을 실행할 수 있도록 권한을 설정
+ *  chmod u+x 파일명 하면된다.
+ *  
+ *  폴더 삭제
+ *  rm -rf 파일명
+ *  -r 폴더와 폴더 하위 폴더 모두삭제
+ *  -f 강제 삭제 (파일삭제시 확인안함)
+ *  
+ * gradle을 이용해서 빌드를 하게 되면 java파일을 컴파일할 jdk가 없다고 뜬다.
+ * apt를 이용해서 자바 JDK설치
+ * sudo apt update
+ * sudo apt-cache search jdk | greap openjdk-11
+ * sudo apt install openjdk-11-jdk
+ * .gradlew build
+ * 
+ *백그라운드에서 계속 동작 할 수 있도록 설정
+ * nohup 명령어
+ * 리눅스에서 프로세스를 실행하 터미널의 세션이 끊어지더라도 지속적으로 동작할 수있도록 실행해 주는 명령어
+ * nohup java -jar 파일명.jar &
+ * SSH창을 닫고 나서 url을 이용해서 접속시도!
+ * 그 로그값들은 libs 폴더 안에 .jar파일이랑 같이 있다.
+ * 기본적인 이름 nohup.out
+ * cat nohup.out 파일을 봐도 되지만 너무 길다
+ * 뒤에서 부터 10개 확인 할 수 있도록
+ * tail -f nohup.out
+ *  -f 실시간으로 로그 값으 출력해주는 옵션!
+ *  백그라운드에서 동작하는 프로세스들은 pid 부여된다.
+ *  내가 종료를 누르고 싶을 경우에는 pid를 찾아서 kill -9 pid(4914)
+ *  
+ *  
  * 
  */

@@ -9,6 +9,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,9 @@ import org.springframework.context.annotation.Configuration;
 import com.ss.batch.entity.BookingEntity;
 import com.ss.batch.entity.BookingStatus;
 import com.ss.batch.entity.NotificationEntity;
+import com.ss.batch.entity.NotificationEvent;
 import com.ss.batch.entity.PassStatus;
+import com.ss.batch.modelmapper.NotificationModelMapper;
 
 @Configuration
 public class SendNotificationClassJobConfig {
@@ -58,7 +61,7 @@ public class SendNotificationClassJobConfig {
 		return this.stepBuilderFactory.get("addMotificationStep")
 				 					  .<BookingEntity,NotificationEntity>chunk(CHUNK_SIZE)
 				 					  .reader(addNotificationItemReader())
-				 					  .processor()
+				 					  .processor(addNotificationItemProcessor())
 				 					  .writer()
 				 					  .build();
 		
@@ -77,5 +80,17 @@ public class SendNotificationClassJobConfig {
 		
 												
 	}
+	@Bean
+	public ItemProcessor<BookingEntity, NotificationEntity>
+		   addNotificationItemProcessor(){
+		   return BookingEntity -> NotificationModelMapper
+				   .INSTACE
+				   .toNotificationEntity(BookingEntity, NotificationEvent.BEFORE_CLASS);
+
+		
+	}
+	
+	
+	
 	
 }
